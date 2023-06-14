@@ -21,7 +21,7 @@ const shop = {
   "shopBrands": [
     {
       "brandId": "",
-      "brandName": "",
+      "brandName": "Brand Name1",
       "brandAvailabile": "Available",
       "pmiLocal": "",
       "pmiImport": "",
@@ -32,7 +32,7 @@ const shop = {
     },
     {
       "brandId": "",
-      "brandName": "",
+      "brandName": "Brand Name 2",
       "brandAvailabile": "",
       "pmiLocal": "",
       "pmiImport": "",
@@ -45,15 +45,15 @@ const shop = {
   "brandPostersList": [
     {
       "brandId": "",
-      "brandName": "",
+      "brandName": "Brand Poster 1",
       "quantity": "2",
-      "posterImage": ""
+      "posterImage": "https://images.unsplash.com/photo-1523821757808-8c895a0aba06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
     },
     {
       "brandId": "",
-      "brandName": "",
-      "quantity": "",
-      "posterImage": ""
+      "brandName": "Brand poster 2",
+      "quantity": "3",
+      "posterImage": "https://images.unsplash.com/photo-1523821757808-8c895a0aba06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
     }
   ],
   "auditQuestionsList": [
@@ -104,14 +104,14 @@ const Step = ({ heading, children }) => {
   return <Card >
     <Card.Header >
       <div className='d-flex justify-content-between'>
-        <h4 className='text-primary font-weight-bold m-0'>{shop.shopName}
+        <h4 className='text-primary font-weight-bold m-0' style={{ width:200 }}>{shop.shopName}
         <small className="text-muted d-block mt-2">+92 322 5331214</small>
         </h4>
         <div className='text-center'>
           <h4>{heading}</h4>
           <h6>00:10:20</h6>
         </div>
-        <div class="text-right">
+        <div className="text-right" style={{ width:200 }}>
           <span className="d-inline-block text-muted font-weight-bold">John Doe</span>
           <span className="text-dark font-weight-bold d-block">+92 234 2894234</span>
         </div>
@@ -244,46 +244,52 @@ const AuditView = () => {
                 {infoBlock({label:'Hot Spot Type',value:'Poster'})}
             </div>
         </Step>
-        <Step number={4} heading="Shop Brands" >
-          <div className='text-center'>
-            <div className="brand h3">Malbro</div>
-            <div className="d-flex">
-              <div className='mb-3 mx-5 d-flex flex-column align-items-center'>
-                <span className='p-3'>Original</span>
-                  {infoBlock({label:'Brand Available',value:shop.shopBrands[0].brandAvailabile})}
-                  {infoBlock({label:'Front Stock Imported',value:shop.shopBrands[0].frontStockImport})}
+        {/* Shop Brands */}
+        {shop.shopBrands.map(brand=>(
+            <Step number={4} heading="Shop Brands" >
+              <div className='text-center'>
+                <div className="brand h3">{brand.brandName}</div>
+                <div className="d-flex">
+                  <div className='mb-3 mx-5 d-flex flex-column align-items-center'>
+                    <span className='p-3'>Original</span>
+                      {infoBlock({label:'Brand Available',value:brand.brandAvailabile})}
+                      {infoBlock({label:'Front Stock Imported',value:brand.frontStockImport})}
+                  </div>
+                  <div className='mb-3 mx-5 d-flex flex-column align-items-center'>
+                    <span className='p-3'>Test</span>
+                      {infoBlock({label:'Brand Available',value:brand.brandAvailabile})}
+                      {infoBlock({label:'Front Stock Imported',value:brand.frontStockImport})}
+                  </div>
+                </div>
               </div>
-              <div className='mb-3 mx-5 d-flex flex-column align-items-center'>
-                <span className='p-3'>Test</span>
-                  {infoBlock({label:'Brand Available',value:shop.shopBrands[0].brandAvailabile})}
-                  {infoBlock({label:'Front Stock Imported',value:shop.shopBrands[0].frontStockImport})}
-              </div>
-            </div>
-          </div>
-
-        </Step>
-        <Step number={4} heading="Shop Posters" >
-          <div className='d-flex flex-column align-items-center'>
-              <h3>Gold Leaf Poster</h3>
-            <div className='d-flex justify-content-center'>
-              <div className='position-relative w-25 mb-3 mx-5 d-flex flex-column align-items-center'>
-                  <span className='p-3'>Original</span>
-                  <img src="https://images.unsplash.com/photo-1523821757808-8c895a0aba06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="shop picture"
+            </Step>
+        ))}
+        {/* Shop Brands */}
+        {shop.brandPostersList.map(poster=>(
+            <Step number={4} heading="Shop Posters" >
+            <div className='d-flex flex-column align-items-center'>
+                <h3>{poster.posterName}</h3>
+              <div className='d-flex justify-content-center'>
+                <div className='position-relative w-25 mb-3 mx-5 d-flex flex-column align-items-center'>
+                    <span className='p-3'>Original</span>
+                    <img src={poster.posterImage} alt="shop picture"
+                      className='w-100 border mb-3'
+                      style={{ objectFit: 'contain' }} />
+                      {infoBlock({label:'Quantity',value:poster.quantity})}
+                </div>
+                <div className='position-relative w-25 mb-3 mx-5 d-flex flex-column align-items-center'>
+                  <span className='p-3'>Test</span>
+                  <img src={poster.posterImage} alt="shop picture"
                     className='w-100 border mb-3'
                     style={{ objectFit: 'contain' }} />
-                    {infoBlock({label:'Quantity',value:shop.brandPostersList[0].quantity})}
-              </div>
-              <div className='position-relative w-25 mb-3 mx-5 d-flex flex-column align-items-center'>
-                <span className='p-3'>Test</span>
-                <img src="https://images.unsplash.com/photo-1523821757808-8c895a0aba06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="shop picture"
-                  className='w-100 border mb-3'
-                  style={{ objectFit: 'contain' }} />
-                  {infoBlock({label:'Quantity',value:shop.brandPostersList[0].quantity})}
+                    {infoBlock({label:'Quantity',value:poster.quantity})}
+                </div>
               </div>
             </div>
-          </div>
 
-        </Step>
+          </Step>
+        ))}
+
       </Wizard>
     </Form>
   );
